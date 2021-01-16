@@ -44,16 +44,18 @@ export GIT_REV_TAG="$(git describe --always --dirty)-unknown"
 docker_build(){
     IMAGE=$1
 
-    docker build -t k8sgerrit/$IMAGE:$TAG \
-        -t k8sgerrit/$IMAGE:$GIT_REV_TAG \
+    docker build -t quay.io/port/$IMAGE:$TAG \
+        -t quay.io/port/$IMAGE:$GIT_REV_TAG \
         ./container-images/$IMAGE
 
     if test $? -ne 0; then
-        REPORT="$REPORT Failed: k8sgerrit/$IMAGE.\n"
+        REPORT="$REPORT Failed: quay.io/port/$IMAGE.\n"
         RETURN_CODE=1
     else
-        REPORT="$REPORT Success: k8sgerrit/$IMAGE:$TAG\n Success: k8sgerrit/$IMAGE:$GIT_REV_TAG\n"
+        REPORT="$REPORT Success: quay.io/port/$IMAGE:$TAG\n Success: quay.io/port/$IMAGE:$GIT_REV_TAG\n"
     fi
+
+    docker push quay.io/port/$IMAGE:$GIT_REV_TAG
 }
 
 docker_build_gerrit_base(){

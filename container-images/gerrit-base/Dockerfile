@@ -22,6 +22,11 @@ RUN curl -k -o /var/plugins/healthcheck.jar \
         https://gerrit-ci.gerritforge.com/job/plugin-healthcheck-bazel-stable-3.3/lastSuccessfulBuild/artifact/bazel-bin/plugins/healthcheck/healthcheck.jar && \
     ln -s /var/plugins/healthcheck.jar /var/gerrit/plugins/healthcheck.jar
 
+# Download checks plugin
+RUN curl -k -o /var/plugins/checks.jar \
+        https://gerrit-ci.gerritforge.com/job/plugin-checks-bazel-stable-3.3/lastSuccessfulBuild/artifact/bazel-bin/plugins/checks/checks.jar && \
+    ln -s /var/plugins/checks.jar /var/gerrit/plugins/checks.jar
+
 # Allow incoming traffic
 EXPOSE 29418 8080
 
