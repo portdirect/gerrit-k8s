@@ -112,6 +112,13 @@ class GerritInit:
 
         flags = "--no-auto-start --batch"
 
+        command = "java -jar /var/war/gerrit.war init %s -d %s" % (
+            flags,
+            self.site,
+        )
+
+        init_process = subprocess.run(command.split(), stdout=subprocess.PIPE)
+
         command = "java -jar /var/war/gerrit.war init %s %s -d %s" % (
             flags,
             plugin_options,

@@ -1,10 +1,10 @@
 FROM base:latest
 
-RUN apk update && \
-    apk add --no-cache \
+RUN apt-get update && \
+    apt-get install --no-install-recommends -y \
       curl \
-      openssh-keygen \
-      openjdk11
+      openssh-client \
+      openjdk-11-jre
 
 RUN mkdir -p /var/gerrit/bin && \
     mkdir -p /var/gerrit/etc && \
@@ -35,9 +35,9 @@ RUN chown -R gerrit:users /var/gerrit && \
     chown -R gerrit:users /var/war
 USER gerrit
 
-RUN java -jar /var/gerrit/bin/gerrit.war init \
-      --batch \
-      --no-auto-start \
-      -d /var/gerrit
+# RUN java -jar /var/gerrit/bin/gerrit.war init \
+#       --batch \
+#       --no-auto-start \
+#       -d /var/gerrit
 
 ENTRYPOINT ["ash", "/var/tools/start"]
